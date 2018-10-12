@@ -16,14 +16,23 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.post('', function(req,res) {
   fs.appendFile('src/data.json', JSON.stringify(req.body, null, 2)+'\r\n', function(err) {
     if (err) throw err;
-    console.log('Done !');
+    //console.log('Done !');
   });
   res.redirect('');
 });
 
+app.get('/stock', function(req, res){
+  let jsonData = require('../src/data.json');
+  //console.log(jsonData);
+  res.send(jsonData);
+});
+
+// !!!!!!!!!!!!!!!!!!!!! PROBLEME => LE FICHIER JSON S'ECRIT MAL POUR PLUSIEURS OBJETS (MAIS BON POUR UN SEUL OBJET)
+
+
 app.listen(8083)
 
 /*
-TODO -> Bouton sur l'interface "voir ci, voirça " etc ... 
+TODO -> Bouton sur l'interface "voir ci, voir ça " etc ...
 Utiliser le tuto du prof pour utiliser les méthodes get pour afficher des choses spécifiques
-*/ 
+*/
