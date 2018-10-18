@@ -1,6 +1,1 @@
-{
-  "nom": "Resident Evil ",
-  "prix": "56",
-  "nombre": "456",
-  "submit": "Valider"
-}
+[{"nom":"League of Legends","prix":"0","nombre":"999","genre":"moba","submit":"Valider"},{"nom":"FIFA 19","prix":"55","nombre":"600","genre":"sport","submit":"Valider"},{"nom":"Resident Evil ","prix":"59","nombre":"456","genre":"horreur","submit":"Valider"},{"nom":"The Evil Within","prix":"70","nombre":"768","genre":"horreur","submit":"Valider"},{"nom":"Dofus","prix":"1","nombre":"1","genre":"arcade","submit":"Valider"}]
