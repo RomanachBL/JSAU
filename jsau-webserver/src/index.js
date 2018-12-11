@@ -13,91 +13,163 @@ app.use(bodyParser.json())
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
+var game = {
+  id : 0,
+  nom : "",
+  nombre : "",
+  genre : ""
+}
+
+//UN TEST => Si le fichier est vide, alors on met les crochets
 fs.readFile('src/data.json', function (err, data) {
-  if(data.toString() == ''){
+  if(data.length == 0){
     fs.writeFile('src/data.json', '[]', (err) => {
       if (err) throw err;
     })
   }
 })
 
-app.post('', function(req,res) {
+//Là, on écrit les données dans 'data.json'
+app.post('/submit', function(req,res) {
   fs.readFile('src/data.json', function (err, data) {
     data = JSON.parse(data);
-    data.push(req.body)
+
+    // On check pour avoir le dernier id
+    var id = 0;
+    //console.log(id);
+    if(data.length>0){
+      id = data[data.length-1].id;
+      id++
+    }
+  //console.log(id);
+
+    var game = {
+      id : id,
+      nom : ""+req.body.nom,
+      nombre : ""+req.body.nombre,
+      genre : ""+req.body.genre
+    }
+
+    //Si le nom existe déjà, et qu'on appuie sur 'Valider', alors on ne fait rien
+    // (On supprime l'élément et on réécrit le même)
+    for (x in data){
+        if(data[x].nom==req.body.nom && data[x].id != id){
+          var game = {
+            id : data[x].id,
+            nom : ""+data[x].nom,
+            nombre : ""+data[x].nombre,
+            genre : ""+data[x].genre
+          }
+          data.splice(x,1);
+        }
+    }
+
+    // Et on envoie
+    data.push(game)
     var json = JSON.stringify(data)
-    fs.writeFile('src/data.json', json+'\n\r', (err) => {
+    fs.writeFile('src/data.json', json, (err) => {
       if (err) throw err;
       //console.log('Done !');
     })
   })
-  res.redirect('');
+  res.redirect('/');
 });
 
 app.get('/stock', function(req, res){
+
   fs.readFile('src/data.json',function (err, data) {
     var data = JSON.parse(data)
     var html = "<table>"
     html += "<tr>"
+    html += "<th>ID</th>"
     html += "<th>Nom</th>"
-    html += "<th>Prix</th>"
     html += "<th>Nombre</th>"
     html += "<th>Genre</th>"
     html += "</tr>"
     for (x in data){
-      html += "<tr><td>"+data[x]["nom"]+"</td>"
-      html += "<td>"+data[x]["prix"]+"</td>"
-      html += "<td>"+data[x]["nombre"]+"</td>"
-      html += "<td>"+data[x]["genre"]+"</td></tr>"
+      html += "<tr><td>"+data[x].id+"</td>"
+      html += "<td><a href='/stock/"+data[x].id+"'>"+data[x].nom+"</a></td>"
+      html += "<td>"+data[x].nombre+"</td>"
+      html += "<td>"+data[x].genre+"</td>"
+      html += "<td><form method='get' action='/delete/"+data[x].id+"'> <input type='submit' value='Supprimer'/> </form></td></tr>"
     }
     html += "</table>"
     res.send(html);
   });
 });
 
-app.get('/stock/:genre', function (req, res) {
-  fs.readFile('src/data.json', function (err, data) {
-    var jeux = JSON.parse(data)
-    var liste_genres = []
-    for (x in jeux){
-      if (jeux[x]["genre"] == req.params.genre){
-        liste_genres.push(jeux[x])
+
+app.get('/stock/:id', function (req, res) {
+  fs.readFile('src/data.json',function (err, data) {
+    var data = JSON.parse(data)
+    var html = "<table>"
+    html += "<tr>"
+    html += "<th>ID</th>"
+    html += "<th>Nom</th>"
+    html += "<th>Nombre</th>"
+    html += "<th>Genre</th>"
+    html += "</tr>"
+    for (x in data){
+      if(data[x].id==req.params.id){
+        html += "<tr><td>"+data[x].id+"</td>"
+        html += "<td>"+data[x].nom+"</td>"
+        html += "<td>"+data[x].nombre+"</td>"
+        html += "<td>"+data[x].genre+"</td>"
+        html += "<td><form method='get' action='/delete/"+data[x].id+"'> <input type='submit' value='Supprimer'/> </form></td></tr>"
       }
     }
-    res.json(liste_genres)
+    html += "</table>"
+    res.send(html);
   });
 })
 
-app.get('/:nom', function (req, res) {
-  fs.readFile('src/data.json', function (err, data) {
-    var nom = JSON.parse(data)
-    var liste_noms = []
-    for (x in nom){
-      if (nom[x]["nom"] == req.params.nom){
-        liste_noms.push(nom[x])
-      }
-    }
-    res.json(liste_noms)
-  });
-})
 
-app.delete('/delete/:nom', function (req, res) {
+app.get('/delete/:id', function (req, res) {
   fs.readFile('src/data.json', function (err, data) {
-    var nom = JSON.parse(data)
-    for (var x in nom){
-      if (nom[x]["nom"] == req.params.nom){
-        delete nom[x]
-      }
+    data = JSON.parse(data);
+
+    for (x in data){
+        if(data[x].id==req.params.id){
+          data.splice(x,1);
+        }
     }
-    fs.writeFile('src/data.json', JSON.stringify(data.filter(x => x)), (err) => {
+    var json = JSON.stringify(data)
+
+    fs.writeFile('src/data.json', json, (err) => {
       if (err) throw err;
       //console.log('Done !');
     })
-    res.redirect('');
   });
+  res.redirect('/stock');
 })
 
-//modifier les méthodes d'affichage (HTML et non JSON)
+app.post('/modif', function (req, res) {
+  fs.readFile('src/data.json', function (err, data) {
+    data = JSON.parse(data);
+
+    for (x in data){
+        if(data[x].nom==req.body.nom){
+          var game = {
+            id : x,
+            nom : ""+req.body.nom,
+            nombre : ""+req.body.nombre,
+            genre : ""+req.body.genre
+          }
+
+          data.splice(x,1, game);
+        }
+    }
+    var json = JSON.stringify(data)
+
+    fs.writeFile('src/data.json', json, (err) => {
+      if (err) throw err;
+      //console.log('Done !');
+    })
+  });
+  res.redirect('/');
+})
+
+
 //methode override
 // FETCH DELETE, PUT etc ...
 //browserify

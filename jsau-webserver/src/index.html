@@ -11,9 +11,6 @@
           <label>Nom :
             <input type="text" name="nom" value="">
           </label></br></br>
-          <label>Prix :
-            <input type="number" name="prix" max="999" min="0"> €
-          </label></br></br>
           <label>Nombre :
             <input type="number" name="nombre" max="999" min="0">
           </label></br></br>
@@ -23,13 +20,14 @@
             <option value="sport">Sport</option>
             <option value="fps">FPS</option>
             <option value="arcade">Arcade</option>
-          </select>
-          <input type="submit" name="submit" value="Valider"></br></br>
+          </select></br></br>
+          <input type="submit" name="submit" value="Valider" formaction="/submit">
+          <input type="submit" name="submit" value="Modifier" formaction="/modif"></br></br>
+      </form></br>
+
+      <form method="get" action="/stock">
+          <input type="submit" id="btn_1" value="Voir le stock"/>
       </form>
-      <div>
-          <input type="button" id="btn_1" value="Voir le stock"/>
-      </div>
+
     </body>
-
-
 </html>
