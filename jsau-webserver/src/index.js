@@ -3,8 +3,9 @@ var app = express()
 var bodyParser = require('body-parser')
 var fs = require ('fs')
 
-const morgan = require('morgan')
+//app.use('/api',require('./routes/api'));
 
+const morgan = require('morgan')
 app.use(morgan('dev'))
 app.use(express.static(__dirname + '/'))
 
@@ -16,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 var game = {
   id : 0,
   nom : "",
-  nombre : "",
+  nombre : 0,
   genre : ""
 }
 
@@ -41,23 +42,24 @@ app.post('/submit', function(req,res) {
       id = data[data.length-1].id;
       id++
     }
-  //console.log(id);
+    //console.log(id);
 
     var game = {
       id : id,
       nom : ""+req.body.nom,
-      nombre : ""+req.body.nombre,
+      nombre : req.body.nombre,
       genre : ""+req.body.genre
     }
+
 
     //Si le nom existe déjà, et qu'on appuie sur 'Valider', alors on ne fait rien
     // (On supprime l'élément et on réécrit le même)
     for (x in data){
-        if(data[x].nom==req.body.nom && data[x].id != id){
+        if (data[x].nom==req.body.nom && data[x].id != id){
           var game = {
             id : data[x].id,
             nom : ""+data[x].nom,
-            nombre : ""+data[x].nombre,
+            nombre : (+data[x].nombre)+(+req.body.nombre), //+ devant pour bien dire que c'est un nombre et éviter la concaténation
             genre : ""+data[x].genre
           }
           data.splice(x,1);
@@ -75,8 +77,8 @@ app.post('/submit', function(req,res) {
   res.redirect('/');
 });
 
+//Pour l'affichage dans 'stock'
 app.get('/stock', function(req, res){
-
   fs.readFile('src/data.json',function (err, data) {
     var data = JSON.parse(data)
     var html = "<table>"
@@ -98,7 +100,7 @@ app.get('/stock', function(req, res){
   });
 });
 
-
+// Juste un petit test d'affichage en prenant un id
 app.get('/stock/:id', function (req, res) {
   fs.readFile('src/data.json',function (err, data) {
     var data = JSON.parse(data)
@@ -124,6 +126,7 @@ app.get('/stock/:id', function (req, res) {
 })
 
 
+// Suppression d'un élément
 app.get('/delete/:id', function (req, res) {
   fs.readFile('src/data.json', function (err, data) {
     data = JSON.parse(data);
@@ -143,6 +146,8 @@ app.get('/delete/:id', function (req, res) {
   res.redirect('/stock');
 })
 
+
+//Modification d'un élément
 app.post('/modif', function (req, res) {
   fs.readFile('src/data.json', function (err, data) {
     data = JSON.parse(data);
@@ -152,7 +157,7 @@ app.post('/modif', function (req, res) {
           var game = {
             id : x,
             nom : ""+req.body.nom,
-            nombre : ""+req.body.nombre,
+            nombre : req.body.nombre,
             genre : ""+req.body.genre
           }
 
@@ -169,10 +174,5 @@ app.post('/modif', function (req, res) {
   res.redirect('/');
 })
 
-
-//methode override
-// FETCH DELETE, PUT etc ...
-//browserify
-//CSS d3?
 
 app.listen(8083)
