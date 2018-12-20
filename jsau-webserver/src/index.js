@@ -46,37 +46,6 @@ fs.readFile('src/data.json', (err, data) => {
 
 // ###############################################################
 
-/*
-//Modification d'un élément
-app.post('/modif', (req, res) => {
-    fs.readFile('src/data.json', (err, data) => {
-        data = JSON.parse(data)
-
-        for (x in data) {
-            if (data[x].nom == req.body.nom) {
-                game = {
-                    id : x,
-                    nom : '' + req.body.nom,
-                    nombre : req.body.nombre,
-                    genre : '' + req.body.genre
-                }
-
-                data.splice(x, 1, game)
-            }
-        }
-        let json = JSON.stringify(data)
-
-        fs.writeFile('src/data.json', json, (err) => {
-            if (err) {
-                throw err
-            }
-            //console.log('Done !');
-        })
-    })
-    res.redirect('/')
-})
-*/
-
 // Page de d3
 app.get('/graph/', (req, res) => {
   fs.readFile('src/data.json', (err, data) => {

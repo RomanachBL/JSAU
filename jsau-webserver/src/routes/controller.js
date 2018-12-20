@@ -1,5 +1,10 @@
 'usestrict'
 
+//Promises
+const P = require('bluebird')
+//const util = require('util')
+const readFile = P.promisify(require('fs').readFile)
+
 let fs = require('fs')
 
 let game = {
@@ -55,14 +60,29 @@ exports.submit = (req, res) => {
     })
     res.redirect('/')
 }
-
+/*
 exports.afficher = (req, res) => {
     fs.readFile('src/data.json', (err, data) => {
         data = JSON.parse(data)
         res.render('stock', {data : data});
     })
 }
+*/
+// ###### Promise pour get stock ########
 
+exports.afficher = (req, res) => {
+  return readFile('src/data.json')
+  .then (JSON.parse)
+  .then ((text) => res.render('stock', {data : text}))
+  .catch(SyntaxError, function(err) {
+    console.error("Invalid JSON in file", err)
+  })
+  .catch(function(err) {
+      console.error("Unable to read file", err)
+  })
+}
+
+/*
 exports.afficher_id = (req, res) => {
     fs.readFile('src/data.json', (err, data) => {
       data = JSON.parse(data)
@@ -70,6 +90,26 @@ exports.afficher_id = (req, res) => {
       res.render('stock_id', {data : data , id : id});
     })
 }
+*/
+
+exports.afficher_id = (req, res) => {
+  return readFile('src/data.json')
+  .then (JSON.parse)
+  .then ((text) => res.render('stock_id', {data : text, id : req.params.id}))
+  .catch(SyntaxError, function(err) {
+    console.error("Invalid JSON in file", err)
+  })
+  .catch(function(err) {
+      console.error("Unable to read file", err)
+  })
+}
+
+
+
+// ########################################
+
+
+
 
 exports.delete = (req, res) => {
     fs.readFile('src/data.json', (err, data) => {
@@ -90,7 +130,7 @@ exports.delete = (req, res) => {
       })
 
     })
-    res.get('/stock', this.afficher)
+    res.redirect('/stock')
 }
 
 exports.form_put = (req, res) => {
