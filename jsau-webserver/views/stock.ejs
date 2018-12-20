@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>JSAU</title>
+    <link rel="stylesheet" href="/CSS/style.css" type="text/css">
+  </head>
+
+  <body>
+    <table>
+      <tr id="tr_a">
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Nombre</th>
+        <th>Genre</th>
+        <th>Modifier ?</th>
+        <th>Supprimer ?</th>
+      </tr>
+      <% for (i in data) { %>
+      <tr>
+        <td><%= data[i].id %></td>
+        <td><a href='/stock/<%= data[i].id%>'>
+              <%= data[i].nom %>
+            </a>
+        </td>
+        <td><%= data[i].nombre %></td>
+        <td><%= data[i].genre %></td>
+        <td>
+          <form method="GET" action="/put/<%= data[i].id%>">
+            <button id="mod" type="submit"> MODIFIER </button>
+          </form>
+        </td>
+        <td>
+          <form method="POST" action="/del/<%= data[i].id%>?_method=DELETE">
+            <button id="del" type="submit"> DELETE </button>
+          </form>
+        </td>
+      </tr>
+      <% } %>
+    </table>
+  </body>
+
+</html>

@@ -2,32 +2,94 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Titre</title>
+        <title>JSAU</title>
+        <link rel="stylesheet" href="/CSS/style-index.css" type="text/css">
     </head>
 
     <body>
-      <form method="post">
-        <label for="arrivage">Arrivage d'un jeu vidéo :</label></br></br>
-          <label>Nom :
-            <input type="text" name="nom" value="">
-          </label></br></br>
-          <label>Nombre :
-            <input type="number" name="nombre" max="999" min="1" value="1">
-          </label></br></br>
-          <select name="genre" multiple>
-            <option value="moba">MOBA</option>
-            <option value="horreur">Horreur</option>
-            <option value="sport">Sport</option>
-            <option value="fps">FPS</option>
-            <option value="arcade">Arcade</option>
-          </select></br></br>
-          <input type="submit" name="submit" value="Valider" formaction="/submit">
-          <input type="submit" name="submit" value="Modifier" formaction="/modif"></br></br>
-      </form></br>
+      <div>
+        <form id="form1" method="post" onsubmit="return f(this)">
+          <label for="arrivage"><h3>Arrivage d'un jeu vidéo :</h3></label></br></br>
+            <label>Nom :
+              <input type="text" name="nom" value="" onblur="t(this)">
+            </label></br></br>
+            <label>Nombre :
+              <input type="number" name="nombre" max="999" onblur="n(this)">
+            </label></br></br>
+            <select name="genre" multiple onblur="g(this)">
+              <option value="moba">MOBA</option>
+              <option value="horreur">Horreur</option>
+              <option value="sport">Sport</option>
+              <option value="fps">FPS</option>
+              <option value="arcade">Arcade</option>
+            </select></br></br>
+            <input id="btn1" type="submit" name="submit" value="Valider" formaction="/submit">
+        </form></br>
+      </div>
 
-      <form method="get" action="/stock">
-          <input type="submit" id="btn_1" value="Voir le stock"/>
+      <form id="form2" method="get" action="/stock">
+        <label>Pour voir le stock : </label>
+        <input id="btn3" type="submit" id="btn_1" value="Voir"/>
       </form>
 
     </body>
 </html>
+
+
+<script src="/resource/js/bundle.js" type="text/javascript" ></script>
+<!--
+<script>
+function verifTxt(champ)
+{
+   if(champ.value.length == 0)
+   {
+      champ.style.borderColor = "red";
+      return false;
+   }else{
+      return true;
+   }
+}
+
+function verifNb(champ)
+{
+   if(champ.value.length == 0)
+   {
+      champ.style.borderColor = "red";
+      return false;
+   }else{
+      return true;
+   }
+}
+
+function verifGenre(champ)
+{
+   if(champ.value.length == 0)
+   {
+      champ.style.borderColor = "red";
+      return false;
+   }else{
+      return true;
+   }
+}
+
+function verifForm(f)
+{
+   console.log("Je suis dans verifForm");
+   var txt = verifTxt(f.nom);
+   var nb = verifNb(f.nombre);
+   var gn = verifGenre(f.genre);
+
+   var truc = f.nom.value;
+
+   if(txt && nb && gn){
+      alert("Vous avez ajouté le jeu : "+truc);
+      return true;
+   }
+   else
+   {
+      alert("Veuillez remplir tous les champs");
+      return false;
+   }
+}
+</script>
+-->

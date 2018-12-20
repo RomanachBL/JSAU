@@ -1,20 +1,23 @@
-var express = require('express')
-const router = express.Router();
+'use strict'
 
-router.get('/', function(req, res){
-  res.send({type: 'GET'});
-});
+let cont = require ('./controller.js')
 
-router.post('/', function(req, res){
-  res.send({type: 'POST'});
-});
+module.exports = function(app) {
+  //route stock
+  app.get('/stock', cont.afficher)
 
-router.put('/:id', function(req, res){
-  res.send({type: 'PUT'});
-});
+  //route d'un jeu en particulier
+  app.get('/stock/:id', cont.afficher_id)
 
-router.delete('/:id', function(req, res){
-  res.send({type: 'DELETE'});
-});
+  //post : récupère formulaire
+  app.post('/submit', cont.submit)
 
-module.exports = router;
+  //DELETE
+  app.delete('/del/:id', cont.delete)
+
+  //get la page de modif
+  app.get('/put/:id', cont.form_put)
+
+  //PUT
+  app.put('/putMod/:id', cont.mod_put)
+}

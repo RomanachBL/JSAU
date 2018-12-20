@@ -1,0 +1,37 @@
+table {
+  border: 3px solid black;
+}
+
+tr, td{
+  border: 1px solid black;
+}
+
+#tr_a{
+  background-color: lightblue;
+}
+
+td{
+  padding: 7px;
+  text-align: center;
+
+}
+
+#del{
+  text-decoration: none;
+  font-weight: bold;
+  color: red;
+}
+
+#del:hover{
+  opacity: 0.5;
+}
+
+#mod{
+  text-decoration: none;
+  font-weight: bold;
+  color: Green;
+}
+
+#mod:hover{
+  opacity: 0.5;
+}

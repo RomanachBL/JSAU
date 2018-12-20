@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>JSAU</title>
+        <link rel="stylesheet" href="/CSS/style-index.css" type="text/css">
+    </head>
+
+    <body>
+      <div>
+        <form id="form1" method="POST" onsubmit="return f(this)" action="/putMod/<%= data[id].id%>?_method=PUT">
+          <label for="arrivage"><h3>Modification de <%= data[id].nom%> :</h3></label></br></br>
+            <label>Nom :
+              <input type="text" name="nom" value="<%= data[id].nom%>" onblur="t(this)">
+            </label></br></br>
+            <label>Nombre :
+              <input type="number" name="nombre" max="999" value="<%= data[id].nombre%>" onblur="n(this)">
+            </label></br></br>
+            <select name="genre" multiple onblur="g(this)">
+              <option value="moba" <% if (data[id].genre == "moba"){ %> selected="selected" <% } %> >MOBA</option>
+              <option value="horreur" <% if (data[id].genre == "horreur"){ %> selected="selected" <% } %> >Horreur</option>
+              <option value="sport" <% if (data[id].genre == "sport"){ %> selected="selected" <% } %> >Sport</option>
+              <option value="fps" <% if (data[id].genre == "fps"){ %> selected="selected" <% } %> >FPS</option>
+              <option value="arcade" <% if (data[id].genre == "arcade"){ %> selected="selected" <% } %> >Arcade</option>
+            </select></br></br>
+            <input id="btn2" type="submit" name="submit" value="Modifier">
+        </form></br>
+      </div>
+
+    </body>
+</html>

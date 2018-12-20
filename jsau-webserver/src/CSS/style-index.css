@@ -1,0 +1,52 @@
+div{
+  text-align: center;
+  border: 1px solid black;
+  margin-left: 5%;
+  margin-right: 60%;
+  background: LightGray;
+  box-shadow: 10px 10px 8px #aaa;
+}
+
+#form1{
+  text-align: left;
+  margin-left: 5%;
+}
+
+#form2{
+  text-align: left;
+  margin-left: 5%;
+  margin-top: 2%;
+}
+
+input[type=text], input[type=number]{
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+
+#btn1, #btn2{
+  border: 1px solid #999;
+  border-radius: 10px;
+
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+#btn1:hover, #btn2:hover{
+  opacity: 0.5;
+}
+
+#btn3{
+  border: 1px solid #999;
+  border-radius: 10px;
+
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+}
+
+#btn3:hover{
+  opacity: 0.6;
+}

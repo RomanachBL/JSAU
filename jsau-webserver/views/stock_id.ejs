@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>JSAU</title>
+    <link rel="stylesheet" href="/CSS/style.css" type="text/css">
+  </head>
+
+  <body>
+    <table>
+      <tr id="tr_a">
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Nombre</th>
+        <th>Genre</th>
+      </tr>
+      <% for (x in data) { %>
+        <% if (id == data[x].id) { %>
+        <tr>
+          <td><%= data[x].id %></td>
+          <td><%= data[x].nom %></td>
+          <td><%= data[x].nombre %></td>
+          <td><%= data[x].genre %></td>
+        </tr>
+        <% } %>
+      <% } %>
+    </table>
+  </body>
+</html>
