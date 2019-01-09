@@ -31,8 +31,6 @@ require('./routes/api')(app);
 
 let x
 
-
-
 //UN TEST => Si le fichier est vide, alors on met les crochets
 fs.readFile('src/data.json', (err, data) => {
     if (data.length == 0) {

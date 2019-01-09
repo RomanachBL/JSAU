@@ -8,7 +8,8 @@
 
     <body>
       <div>
-        <form id="form1" method="post" onsubmit="return f(this)">
+        <!--<form id="form1" method="post" onsubmit="return f(this)">-->
+        <form id="form1" method="post">
           <label for="arrivage"><h3>Arrivage d'un jeu vidéo :</h3></label></br></br>
             <label>Nom :
               <input type="text" name="nom" value="" onblur="t(this)">
@@ -37,59 +38,3 @@
 
 
 <script src="/resource/js/bundle.js" type="text/javascript" ></script>
-<!--
-<script>
-function verifTxt(champ)
-{
-   if(champ.value.length == 0)
-   {
-      champ.style.borderColor = "red";
-      return false;
-   }else{
-      return true;
-   }
-}
-
-function verifNb(champ)
-{
-   if(champ.value.length == 0)
-   {
-      champ.style.borderColor = "red";
-      return false;
-   }else{
-      return true;
-   }
-}
-
-function verifGenre(champ)
-{
-   if(champ.value.length == 0)
-   {
-      champ.style.borderColor = "red";
-      return false;
-   }else{
-      return true;
-   }
-}
-
-function verifForm(f)
-{
-   console.log("Je suis dans verifForm");
-   var txt = verifTxt(f.nom);
-   var nb = verifNb(f.nombre);
-   var gn = verifGenre(f.genre);
-
-   var truc = f.nom.value;
-
-   if(txt && nb && gn){
-      alert("Vous avez ajouté le jeu : "+truc);
-      return true;
-   }
-   else
-   {
-      alert("Veuillez remplir tous les champs");
-      return false;
-   }
-}
-</script>
--->

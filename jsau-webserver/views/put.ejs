@@ -8,15 +8,15 @@
 
     <body>
       <div>
-        <form id="form1" method="POST" onsubmit="return f(this)" action="/putMod/<%= data[id].id%>?_method=PUT">
+        <form id="form1" method="POST" action="/putMod/<%= data[id].id%>?_method=PUT">
           <label for="arrivage"><h3>Modification de <%= data[id].nom%> :</h3></label></br></br>
             <label>Nom :
-              <input type="text" name="nom" value="<%= data[id].nom%>" onblur="t(this)">
+              <input type="text" name="nom" value="<%= data[id].nom%>" >
             </label></br></br>
             <label>Nombre :
-              <input type="number" name="nombre" max="999" value="<%= data[id].nombre%>" onblur="n(this)">
+              <input type="number" name="nombre" max="999" value="<%= data[id].nombre%>">
             </label></br></br>
-            <select name="genre" multiple onblur="g(this)">
+            <select name="genre" multiple>
               <option value="moba" <% if (data[id].genre == "moba"){ %> selected="selected" <% } %> >MOBA</option>
               <option value="horreur" <% if (data[id].genre == "horreur"){ %> selected="selected" <% } %> >Horreur</option>
               <option value="sport" <% if (data[id].genre == "sport"){ %> selected="selected" <% } %> >Sport</option>
